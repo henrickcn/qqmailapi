@@ -38,6 +38,15 @@ class Api
         echo json_encode($info);
     }
 
+    //获取用户信息
+    public function getUserInfo(){
+        $result = $this->exmailObj->getUserInfo($_SESSION['api']['token_type'],$_SESSION['api']['access_token'],$_POST['Mail']);
+        if(isset($result['errcode'])){
+            echo json_encode(array('err'=>1,'msg'=>$result['msg']));
+            exit;
+        }
+    }
+
     /**
      * 获取AccessToken值
      */

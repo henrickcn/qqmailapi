@@ -73,8 +73,23 @@ class ExMailQQ
         return $result;
     }
 
-    public function getUserInfo(){
+    /**
+     * 获取用户信息
+     * @param $type
+     * @param $accessToken
+     * @param $mail
+     */
+    public function getUserInfo($type,$accessToken,$mail){
         $url = $this->qqMailHost.$this->getUserInfo;
+        $data = array(
+            'alias'         => $mail,
+        );
+        $headerData = array(
+            'Authorization' => $type." ".$accessToken
+        );
+        $result = self::http($url,'post',$data,$headerData);
+        $result = json_decode($result,true);
+        return $result;
     }
 
 

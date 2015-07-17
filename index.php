@@ -34,6 +34,7 @@
             <input type="text" name="Mail" class="form-control" id="Mail" placeholder="如：me@hejinmin.cn">
         </div>
         <button type="button" id="getExmail" class="btn btn-info">同步登录邮件系统</button>
+        <button type="button" id="getUserInfo" class="btn btn-info">获取用户数据</button>
         <div class="form-group">
             <label for="exampleInputEmail1">管理员帐号：<span class="label label-success">指管理企业邮件的帐号</span></label>
             <input type="text" name="ClientId" class="form-control" id="ClientId" placeholder="如：henrick">
@@ -52,6 +53,11 @@
         //直接进入登录系统
         $("#getExmail").click(function(){
             getExmail();
+        });
+
+        //获取用户数据
+        $("#getUserInfo").click(function(){
+            getUserInfo();
         });
     });
 
@@ -76,6 +82,17 @@
     //单点登录
     function getExmail(){
         $.post("api.php?opt=goExmail",{Mail:$("#Mail").val()},function(data){
+            if(data.err){
+                $(".alert span.msg").html(data.msg);
+                return false;
+            }
+            window.open(data.url);
+        },'json');
+    }
+
+    //获取用户数据
+    function getUserInfo(){
+        $.post("api.php?opt=getUserInfo",{Mail:$("#Mail").val()},function(data){
             if(data.err){
                 $(".alert span.msg").html(data.msg);
                 return false;
